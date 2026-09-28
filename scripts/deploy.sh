@@ -41,20 +41,38 @@ PY
   systemctl start jellyfin.service
   JELLYFIN_URL="$BASE_URL" "$ROOT/scripts/healthcheck.sh"
 }
-if ! systemctl stop jellyfin.service; then echo "Could not stop Jellyfin; refusing installation." >&2; exit 1; fi
-python3 - "$PLUGIN_ROOT" "$PACKAGE" <<'PY'
+if ! systemctl stop jellyfin.service; then
+  echo "Could not stop Jellyfin; restoring its active state." >&2
+  systemctl start jellyfin.service || true
+  exit 1
+fi
+if ! python3 - "$PLUGIN_ROOT" "$PACKAGE" <<'PY'
 import pathlib, shutil, sys
 root, package = map(pathlib.Path, sys.argv[1:])
 for item in root.glob("Jellyfin.Plugin.DongmanYaa_*"):
     if item.is_dir(): shutil.rmtree(item)
 shutil.copytree(package, root / package.name)
 PY
-chown -R jellyfin:jellyfin "$TARGET"
+then
+  echo "Plugin file installation failed; rolling back." >&2
+  restore_previous
+  exit 1
+fi
+if ! chown -R jellyfin:jellyfin "$TARGET"; then
+  echo "Could not set plugin ownership; rolling back." >&2
+  restore_previous
+  exit 1
+fi
 if ! systemctl start jellyfin.service || ! JELLYFIN_URL="$BASE_URL" "$ROOT/scripts/healthcheck.sh"; then
   restore_previous
   exit 1
 fi
 LATEST_LOG="$(find "$LOG_DIR" -maxdepth 1 -type f -name 'log_*.log' -printf '%T@ %p\n' | sort -nr | head -n1 | cut -d' ' -f2-)"
+if [[ -z "$LATEST_LOG" || ! -f "$LATEST_LOG" ]]; then
+  echo "Jellyfin log unavailable after restart; rolling back." >&2
+  restore_previous
+  exit 1
+fi
 if [[ "$LATEST_LOG" != "$LOG_FILE" ]]; then LOG_LINES=0; fi
 NEW_LOG="$(tail -n +$((LOG_LINES + 1)) "$LATEST_LOG")"
 if ! grep -Fq 'Loaded plugin: "DongmanYaa" "0.1.0.0"' <<<"$NEW_LOG" || grep -Eiq 'DongmanYaa.*(error|exception|failed)|(error|exception|failed).*DongmanYaa' <<<"$NEW_LOG"; then
