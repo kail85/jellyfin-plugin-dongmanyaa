@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>DongmanYaa provider settings</title></head>
+<body>
+  <div id="DongmanYaaConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button">
+    <div data-role="content"><div class="content-primary">
+      <form id="DongmanYaaConfigForm">
+        <div class="inputContainer">
+          <label class="inputLabel inputLabelUnfocused" for="SourcesJson">Public TVBox JSON sources</label>
+          <textarea id="SourcesJson" name="SourcesJson" is="emby-input" rows="14"></textarea>
+          <div class="fieldDescription">Configure only providers you are authorized to access. Only ordinary type=1 JSON API listings and direct HTTP(S) media URLs are supported. JAR/JS spiders, parser services, login bypasses, and DRM are not used. Keep this configuration private; custom headers may contain credentials.</div>
+        </div>
+        <button is="emby-button" type="submit" class="raised button-submit block emby-button"><span>Save</span></button>
+      </form>
+    </div></div>
+    <script>
+      const DongmanYaaConfig = { pluginUniqueId: 'dc586128-c5ae-4ac4-bfb0-931c92ed14cb' };
+      document.querySelector('#DongmanYaaConfigPage').addEventListener('pageshow', function () {
+        Dashboard.showLoadingMsg();
+        ApiClient.getPluginConfiguration(DongmanYaaConfig.pluginUniqueId).then(function (config) {
+          document.querySelector('#SourcesJson').value = config.SourcesJson || '{"sources":[]}';
+          Dashboard.hideLoadingMsg();
+        });
+      });
+      document.querySelector('#DongmanYaaConfigForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        Dashboard.showLoadingMsg();
+        ApiClient.getPluginConfiguration(DongmanYaaConfig.pluginUniqueId).then(function (config) {
+          config.SourcesJson = document.querySelector('#SourcesJson').value;
+          ApiClient.updatePluginConfiguration(DongmanYaaConfig.pluginUniqueId, config).then(function (result) {
+            Dashboard.processPluginConfigurationUpdateResult(result);
+          });
+        });
+        return false;
+      });
+    </script>
+  </div>
+</body>
+</html>
