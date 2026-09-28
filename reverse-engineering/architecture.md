@@ -34,6 +34,8 @@ A clean adapter could map title -> series/movie, seasons/episodes -> Jellyfin ep
 
 Jellyfin 10.11.0's native `IChannel` contract is browse-oriented and has no channel-local text query field. Search in a stock Jellyfin client therefore cannot be assumed. The exact installed API contracts were previously inspected in the NAS's 10.11.0 assemblies and in the existing `jellyfin-ikan` worktree.
 
+The repository implementation deliberately supports only configured type=1 JSON APIs. It maps each configured provider to a root folder, category IDs to category folders, title records to metadata-bearing folders, and ordered `vod_play_url` entries to episodes. `vod_play_from` lines become alternate media sources. Before returning a playback source, the plugin probes it with HEAD and falls back to a one-byte range GET only for servers that reject HEAD; it accepts video/HLS/DASH content and rejects HTML/JSON responses. It does not invoke TVBox `playerContent`, global parsers, CatVod JARs or JS spiders. No provider is configured by default.
+
 ## Safety boundary and conclusion
 
 No providers or playable media URLs are bundled in the APK. The source list and active provider configuration require the signed app bootstrap described above, and downloaded JAR/JS spiders may execute provider code. This analysis did not contact that API, derive/replay its signature, fetch its configuration, load spiders, or test a playback resolver. Consequently there is no provider for which catalogue/search/detail/playback access can be established as legitimate and unauthenticated from the supplied artifact alone. A Jellyfin plugin with no verified provider would be a nonfunctional shell, so none was installed.

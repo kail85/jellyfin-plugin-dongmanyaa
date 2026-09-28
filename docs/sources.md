@@ -9,5 +9,6 @@
 | `clan://` local sources | Explicit special handling in `ci` | Unsupported | Device-local configuration is unavailable on Jellyfin and was not present in the APK. |
 | Global media parsers | Parser records in config model | Skipped | Definitions are remote and resolver behavior cannot be verified independently. |
 | Direct HLS/MP4 URLs | Player supports ordinary URLs | Unsupported pending source | No legitimate direct media URL was present in the artifact. |
+| User-configured TVBox type=1 JSON API | Generic provider implementation | Implemented; no source configured | Requires an independently authorized API URL and direct media responses. |
 
-No provider has been marked supported because that requires live catalogue, metadata, episode and media-response evidence from the NAS without protected access.
+No live provider has been marked verified because that requires catalogue, metadata, episode and media-response evidence from the NAS without protected access.

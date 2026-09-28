@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0A012C62-1EEB-4532-AB9B-A5B0047A3BBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jellyfin.Plugin.DongmanYaa", "src\Jellyfin.Plugin.DongmanYaa\Jellyfin.Plugin.DongmanYaa.csproj", "{03302885-0EA0-4F55-9797-03DECB20C5DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DFA85215-507D-4EDF-8E4E-779ECFF13F00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jellyfin.Plugin.DongmanYaa.Tests", "tests\Jellyfin.Plugin.DongmanYaa.Tests\Jellyfin.Plugin.DongmanYaa.Tests.csproj", "{D1FE915B-CD55-4AD6-83BE-60924810C74B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03302885-0EA0-4F55-9797-03DECB20C5DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03302885-0EA0-4F55-9797-03DECB20C5DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03302885-0EA0-4F55-9797-03DECB20C5DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03302885-0EA0-4F55-9797-03DECB20C5DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FE915B-CD55-4AD6-83BE-60924810C74B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FE915B-CD55-4AD6-83BE-60924810C74B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FE915B-CD55-4AD6-83BE-60924810C74B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FE915B-CD55-4AD6-83BE-60924810C74B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{03302885-0EA0-4F55-9797-03DECB20C5DC} = {0A012C62-1EEB-4532-AB9B-A5B0047A3BBF}
+		{D1FE915B-CD55-4AD6-83BE-60924810C74B} = {DFA85215-507D-4EDF-8E4E-779ECFF13F00}
+	EndGlobalSection
+EndGlobal
