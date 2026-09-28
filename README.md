@@ -18,7 +18,7 @@ The project targets the installed Jellyfin 10.11.0 API and .NET 9.
 
 ## Configure
 
-In Jellyfin Dashboard → Plugins → 动漫鸭 settings, add only providers you are authorized to use. See [provider configuration](docs/provider-configuration.md). The standard Jellyfin channel UI supports browsing; search input is unavailable in the native channel contract for this Jellyfin version.
+In Jellyfin Dashboard → Plugins → DongmanYaa settings, add only providers you are authorized to use. The channel appears to clients as 动漫鸭. See [provider configuration](docs/provider-configuration.md). The standard Jellyfin channel UI supports browsing; search input is unavailable in the native channel contract for this Jellyfin version.
 
 ## Deploy
 
