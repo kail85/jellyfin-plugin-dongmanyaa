@@ -1,0 +1,5 @@
+# Original APK is retained locally for analysis and excluded from version control.
+reverse-engineering/*.apk
+**/bin/
+**/obj/
+.vs/
